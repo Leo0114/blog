@@ -1,0 +1,41 @@
+---
+import Layout from "@layouts/Layout.astro";
+import type { BlogPostFrontmatter } from "src/type";
+import PostsList from "@components/PostsList.astro";
+
+let posts = await Astro.glob<BlogPostFrontmatter>("../*.md");
+export async function getStaticPaths() {
+  const posts = await Astro.glob<BlogPostFrontmatter>("../*.md");
+  let tags: string[] = [];
+  posts.forEach((post) => {
+    if (post.frontmatter.tags) {
+      tags.push(...post.frontmatter.tags);
+    }
+  });
+
+  return tags.map((tag) => ({
+    params: {
+      tag: tag.toLocaleLowerCase(),
+    },
+  }));
+}
+const { tag } = Astro.params;
+
+posts = posts.filter((post) => {
+  let shouldShow = false;
+  post.frontmatter.tags?.forEach((postTag) => {
+    if (postTag.toLocaleLowerCase() === tag) {
+      shouldShow = true;
+    }
+  });
+  return shouldShow;
+});
+---
+
+<Layout title={`${tag} Blog Posts`}>
+  <h1 class="mb-8 text-6xl px-4 py-8 capitalize">Blog Post</h1>
+  <p>
+    Muestra el post del blog de <strong class="capitalize">{tag}</strong> tag
+  </p>
+  <PostsList posts={posts} />
+</Layout>

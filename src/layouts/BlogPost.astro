@@ -1,0 +1,53 @@
+---
+import { Picture } from "@astrojs/image/components";
+import type { MarkdownLayoutProps } from "astro";
+import Layout from "./Layout.astro";
+import type { BlogPostFrontmatter } from "src/type";
+import { formatDate } from "@utils";
+
+type Props = MarkdownLayoutProps<BlogPostFrontmatter>;
+
+const { title, date, draft, tags } = Astro.props.frontmatter;
+const { url } = Astro.props;
+const slug = url?.split("/")[2];
+---
+
+<Layout title="Blog Post">
+  <div class="mb-4 text-center px-4 py-4">
+    {
+      draft && (
+        <p class="px-3 text-white bg-red-700 inline-block text-lg  rounded-lg mb-4">
+          Borrador
+        </p>
+      )
+    }
+    {
+      tags && (
+        <div class="mb-2">
+          {tags.map((tag) => (
+            <a
+              class=" mr-2 uppercase text-blue-600 font-bold"
+              href={`/posts/tag/${tag.toLocaleLowerCase()}`}
+            >
+              #{tag}
+            </a>
+          ))}
+        </div>
+      )
+    }
+
+    <h1 class="text-3xl mb-2">{title}</h1>
+    <p>{formatDate(date)}</p>
+  </div>
+  <Picture
+    class="mb-8 rounded-lg px-4 py-6"
+    src={`/public/images/${slug}.jpg`}
+    widths={[400, 600, 1024]}
+    sizes="(max-width:400px) 400px, (max-width: 600px) 600px, 1024px"
+    aspectRatio="5:3"
+    alt="Imagen del blog"
+  />
+  <div class="prose mx-auto max-w-screen-sm px-4 py-8">
+    <slot />
+  </div>
+</Layout>
