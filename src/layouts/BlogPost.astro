@@ -9,7 +9,7 @@ type Props = MarkdownLayoutProps<BlogPostFrontmatter>;
 
 const { title, date, draft, tags } = Astro.props.frontmatter;
 const { url } = Astro.props;
-const slug = url?.split("/")[2];
+const slug = url?.split("/blog/")[2];
 ---
 
 <Layout title="Blog Post">

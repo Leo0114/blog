@@ -3,7 +3,7 @@ import Layout from "@layouts/Layout.astro";
 import type { BlogPostFrontmatter } from "src/type";
 import PostsList from "@components/PostsList.astro";
 
-let posts = await Astro.glob<BlogPostFrontmatter>("./*.md");
+let posts = await Astro.glob<BlogPostFrontmatter>("/blog./*.md");
 ---
 
 <Layout title="Blog Post">
