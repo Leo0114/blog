@@ -7,7 +7,8 @@ import compress from "astro-compress";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://myblog",
+  site: "https://Leo0114.github.io",
+  base: "/blog",
   integrations: [
     tailwind(),
     image({
