@@ -9,7 +9,7 @@ type Props = MarkdownLayoutProps<BlogPostFrontmatter>;
 
 const { title, date, draft, tags } = Astro.props.frontmatter;
 const { url } = Astro.props;
-const slug = url?.split("/blog/")[2];
+const slug = url?.split("/")[2];
 ---
 
 <Layout title="Blog Post">
@@ -41,7 +41,7 @@ const slug = url?.split("/blog/")[2];
   </div>
   <Picture
     class="mb-8 rounded-lg px-4 py-6"
-    src={`/public/images/${slug}.jpg`}
+    src={`/blog/public/images/${slug}.jpg`}
     widths={[400, 600, 1024]}
     sizes="(max-width:400px) 400px, (max-width: 600px) 600px, 1024px"
     aspectRatio="5:3"
